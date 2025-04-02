@@ -46,4 +46,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    private void OnTriggerEnter(Collider other)   //트리거 영역안에 들어왔나를 검사하는 함수
+    {
+        //코인 수집
+        if(other.CompareTag("coin"))              // 코인 트리거와 충돌하면
+        {
+            coinCount++;                          //coinCount = coinCount + 1 코인변수 1을 올려준다.
+            Destroy(other.gameObject);           // 코인 오브젝트를 지운다.
+
+            Debug.Log($"코인 수집 : {coinCount}/{totalcoins}");
+        }
+
+        //목적지 도착 시 종료 로그 출력
+        if(other.gameObject.tag == "Door"&& coinCount == totalcoins)   //모든 코인을 획득 후에 문으로 가면 게임 종료
+        {
+            Debug.Log("게임클리어");
+            //게임 완료 로직 추가 가능
+        }
+    } 
+
+    
 }
+
