@@ -1019,7 +1019,7 @@ Transform:
   m_GameObject: {fileID: 739085597}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1038,6 +1038,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6110832d19093a64496a8fae48ffc618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLives: 3
+  currentLives: 0
+  invincibleTime: 1
+  islnvincible: 0
 --- !u!1 &957906421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1565,14 @@ PrefabInstance:
     - target: {fileID: 9052859965897331337, guid: e7a9945942c457e40adc6134782698af, type: 3}
       propertyPath: m_Name
       value: missle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122565181180164459, guid: e7a9945942c457e40adc6134782698af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.253
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122565181180164459, guid: e7a9945942c457e40adc6134782698af, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.859
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
