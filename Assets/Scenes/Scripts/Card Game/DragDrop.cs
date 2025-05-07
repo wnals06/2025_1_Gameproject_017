@@ -10,18 +10,61 @@ public class DragDrop : MonoBehaviour
 
     private GameManager gameManager;
 
-    //Start is called before the first frame update
     void Start()
     {
-        startPosition = transform.position;
-        startParent = transform.parent;
-
-        gameManager = FindObjectOfType<GameManager>(); 
+        StartPosition = transform.position;
+        StartParent = transform.parent;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (isDragging)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            transform.position = mousePos;
+        }
+    }
+
+    void OnMouseDown()
+    {
+        isDragging = true;
+        StartPosition = transform.position;
+        StartParent = transform.parent;
+        GetComponent<SpriteRenderer>().sortingOrder = 10;
+    }
+
+    void OnMouseUp()
+    {
+        isDragging = false;
+        GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        if (gameManager == null)
+        {
+            ReturnToOriginalPosition();
+            return;
+        }
+
+        if (IsInMergeArea())
+        {
+            gameManager.MoveCardToMerge(gameObject);
+        }
+        else
+        {
+            ReturnToOriginalPosition();
+        }
+    }
+
+    void ReturnToOriginalPosition()
+    {
+        transform.position = StartPosition;
+        transform.SetParent(StartParent);
+    }
+
+    bool IsInMergeArea()
+    {
+        float distance = Vector3.Distance(transform.position, gameManager.mergeArea.position);
+        return distance < 1.5f;
     }
 }

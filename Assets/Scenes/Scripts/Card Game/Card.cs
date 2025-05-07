@@ -5,24 +5,47 @@ using TMPro;
 
 public class Card : MonoBehaviour
 {
-    public int cardValue;                     //카드값 (카드단계)
-    public Sprite cardImage;                 //카드 이미지
-    public TextMeshPro cardText;             //카드 텍스트
-                                             //
+    public int cardValue;                     // 카드 값
+    public Sprite cardImage;                  // 카드 이미지
+    public TextMeshPro cardText;              // 카드 텍스트
 
-    
-    public void lniCard(int value, Sprite image)                      //카드 정보 초기화 함수
+    private Vector3 startPosition;            // 시작 위치 저장용
+    private Transform startParent;            // 시작 부모 오브젝트 저장용
+    private GameManager gameManager;          // GameManager 참조
+
+    void Start()
+    {
+        startPosition = transform.position;
+        startParent = transform.parent;
+        gameManager = FindObjectOfType<GameManager>(); // 또는 외부에서 주입
+    }
+
+    public void InitCard(int value, Sprite image)
     {
         cardValue = value;
         cardImage = image;
 
-        //카드 이미지 설정
-        GetComponent<SpriteRenderer>().sprite = image;                  //해당 이미지를 카드에 표시한다.
+        // 카드 이미지 설정
+        GetComponent<SpriteRenderer>().sprite = image;
 
-        //카드 텍스트 설정 (있는 경우)
+        // 카드 텍스트 설정
         if (cardText != null)
         {
-            cardText.text = cardValue.ToString();                       //카드값을 표시한다.
+            cardText.text = cardValue.ToString();
+        }
+    }
+
+    public void ReturnToOriginalPosition()
+    {
+        transform.position = startPosition;
+        transform.SetParent(startParent);
+
+        if (gameManager != null)
+        {
+            if (startParent == gameManager.handArea)
+            {
+                gameManager.ArrangeHand();
+            }
         }
     }
 }
