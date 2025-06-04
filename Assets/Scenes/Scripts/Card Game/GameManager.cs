@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
 
     //손패 정렬 함수
-   public void ArrangeHand()
+    public void ArrangeHand()
     {
         if (handCount == 0)                     //손에 카드가 없으면 정렬이 필요 없기 때문에 return
             return;
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
 
     public void DrawCardToHand()             //덱에서 카드를 뽑아 손패로 이동
     {
-        if (handCount +  mergeCount >= maxHandSize)           //손패 + 머지 영역을 합쳐서 최대 카드 수와 비교
+        if (handCount + mergeCount >= maxHandSize)           //손패 + 머지 영역을 합쳐서 최대 카드 수와 비교
         {
             Debug.Log("카드 수가 최대입니다. 공간을 확보하세요");
             return;
@@ -194,26 +194,26 @@ public class GameManager : MonoBehaviour
     //머지 버튼 상태 업데이트
     void UpdateMergeButtonState()
     {
-        if(mergeButton != null)                        //머지 버튼이 있을 경우
+        if (mergeButton != null)                        //머지 버튼이 있을 경우
         {
             mergeButton.interactable = (mergeCount == 2 || mergeCount == 3);                 //머지 영역에 카드가 2개 또는 3개만 있을때만 활성화
         }
     }
-    
+
     //머지 영역의 카드들을 합쳐서 새 카드 생성
     void MergeCards()
     {
-        if(mergeCount != 2 && mergeCount != 3)                                        //머지 영역에 카드가 2개나 3개가 있는지 확인하고
-        { 
+        if (mergeCount != 2 && mergeCount != 3)                                        //머지 영역에 카드가 2개나 3개가 있는지 확인하고
+        {
             Debug.Log("머지를 하려면 카드가 2개 또는 3개가 필요합니다!");                //카드가 부족하거나 많을 경우
             return;                                                                      //함수를 종료한다.
-        } 
+        }
 
         int firstCard = mergeCards[0].GetComponent<Card>().cardValue;                  //첫번 째 카드에 있는 값을 가져온다
         for (int i = 1; i < mergeCount; i++)
         {
             Card card = mergeCards[i].GetComponent<Card>();                                 //먼저 배열에 있는 카드들을 순환하면서 검사한다.
-            if(card == null || card.cardValue != firstCard)                       //null 값이거나 카드 값이 다른경우
+            if (card == null || card.cardValue != firstCard)                       //null 값이거나 카드 값이 다른경우
             {
                 Debug.Log("같은 숫자의 카드만 머지 할 수 있습니다.");                      //로그를 남기고 함수를 종료한다.
                 return;                                                                     //함수를 종료한다.
@@ -221,14 +221,14 @@ public class GameManager : MonoBehaviour
         }
 
         int newValue = firstCard + 1;                                                  //머지된 새 카드 값 계산
-        
-        if(newValue > cardImages.Length)                                               //새로운 카드가 생성될 때 최대 값을  검사한다.
+
+        if (newValue > cardImages.Length)                                               //새로운 카드가 생성될 때 최대 값을  검사한다.
         {
             Debug.Log("최대 카드 값에 도달 했습니다.");
             return;
         }
 
-        for(int i = 0; i < mergeCount; i++)                                           //머지 영역의 카드들을 비활성화
+        for (int i = 0; i < mergeCount; i++)                                           //머지 영역의 카드들을 비활성화
         {
             if (mergeCards[i] != null)                                               //머지 영역의 배열들을 순환해서
             {
@@ -239,16 +239,16 @@ public class GameManager : MonoBehaviour
         GameObject newCard = Instantiate(cardPrefab, mergeArea.position, Quaternion.identity);                //새 카드 생성
 
         Card newCardTemp = newCard.GetComponent<Card>();                                                   //생성된 새로운 카드의 컴포넌트를 참조하기 위해 로컬로 선언
-        if(newCardTemp != null)                                                                            //생성된 새로운 카드의 컴포넌트가 존재하면 (문제가 없으면)
+        if (newCardTemp != null)                                                                            //생성된 새로운 카드의 컴포넌트가 존재하면 (문제가 없으면)
         {
             int imageIndex = newValue - 1;
             newCardTemp.InitCard(newValue, cardImages[imageIndex]);
         }
 
         //머지 영역 비우기
-        for(int i = 0; i < maxMergeSize; i++)                                 //머지 배열을 순환하면서 null 값을 만든다.
+        for (int i = 0; i < maxMergeSize; i++)                                 //머지 배열을 순환하면서 null 값을 만든다.
         {
-            mergeCards[i] = null;                                            
+            mergeCards[i] = null;
         }
         mergeCount = 0;                                                      //머지 카운트를 0으로 초기화 시켜준다.
 
@@ -261,10 +261,10 @@ public class GameManager : MonoBehaviour
         ArrangeHand();                                                      //손패 정렬
 
 
-    } 
+    }
 
     //머지 버튼 클릭 시 머지 영역의 카드를 합성
-      void OnMergeButtonClicked()
+    void OnMergeButtonClicked()
     {
         MergeCards();
     }

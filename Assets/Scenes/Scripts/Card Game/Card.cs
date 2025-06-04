@@ -41,11 +41,11 @@ public class Card : MonoBehaviour
         transform.SetParent(startParent);
 
         if (gameManager != null)
-        {
+
             if (startParent == gameManager.handArea)
             {
                 gameManager.ArrangeHand();
             }
-        }
     }
 }
+

@@ -65,6 +65,6 @@ public class DragDrop : MonoBehaviour
     bool IsInMergeArea()
     {
         float distance = Vector3.Distance(transform.position, gameManager.mergeArea.position);
-        return distance < 1.5f;
+        return distance < 2.5f;
     }
 }
